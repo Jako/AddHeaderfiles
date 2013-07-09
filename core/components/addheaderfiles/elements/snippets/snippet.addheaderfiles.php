@@ -31,7 +31,6 @@
  *              sepmed - Seperator for media type or script position in `addcode - |
  *              mediadefault - Media default for css files - screen, tv, projection
  */
-
 // Check Parameters and set them to default values
 $sep = $modx->getOption('sep', $scriptProperties, ';');
 $sepmed = $modx->getOption('sepmed', $scriptProperties, '|');
@@ -43,7 +42,7 @@ if (!function_exists('AddHeaderfiles')) {
 	function AddHeaderfiles($addcode, $sep, $sepmed, $mediadefault) {
 		global $modx;
 
-		if ((strpos(strtolower($addcode), '<script') !== false) || (strpos(strtolower($addcode), '<style') !== false)) {
+		if ((strpos(strtolower($addcode), '<script') !== FALSE) || (strpos(strtolower($addcode), '<style') !== FALSE) || (strpos(strtolower($addcode), '<!--') !== FALSE)) {
 			return $addcode;
 		} else {
 			$parts = explode($sep, $addcode);
@@ -56,26 +55,33 @@ if (!function_exists('AddHeaderfiles')) {
 			if ($chunk) {
 				// part of the parameterchain is a chunkname
 				$part[0] = AddHeaderfiles($chunk, $sep, $sepmed, $mediadefault);
-				if (strpos(strtolower($part[0]), '<style') !== false) {
-					$modx->regClientStartupHTMLBlock($part[0]);
-				} else {
-					if (isset($part[1]) && $part[1] == 'end') {
-						$modx->regClientScript($part[0], true);
-					} else {
-						$modx->regClientStartupScript($part[0], true);
-					}
+				$conditional = (strpos(strtolower($part[0]), '<!--') !== FALSE);
+				$style = (strpos(strtolower($part[0]), '<style') !== FALSE);
+				$startup = !(isset($part[1]) && $part[1] == 'end');
+				switch (TRUE) {
+					case ($conditional || $style):
+						$modx->regClientStartupScript($part[0], TRUE);
+						break;
+					case ($startup):
+						$modx->regClientStartupScript($part[0], FALSE);
+					default:
+						$modx->regClientScript($part[0], FALSE);
+						break;
 				}
 			} else {
 				// otherwhise it is treated as a filename
-				if (substr($part[0], -4) == '.css') {
-					$media = isset($part[1]) ? $part[1] : $mediadefault;
-					$modx->regClientStartupHTMLBlock('<link rel="stylesheet" type="text/css" href="' . $part[0] . '" media="' . $media . '" />');
-				} else {
-					if (isset($part[1]) && $part[1] == 'end') {
-						$modx->regClientScript($part[0]);
-					} else {
+				$style = (substr(trim($part[0]), -4) == '.css');
+				$startup = !(isset($part[1]) && $part[1] == 'end');
+				switch (TRUE) {
+					case ($style):
+						$modx->regClientStartupHTMLBlock('<link rel="stylesheet" type="text/css" href="' . $part[0] . '" media="' . (isset($part[1]) ? $part[1] : $mediadefault) . '" />');
+						break;
+					case($startup):
 						$modx->regClientStartupScript($part[0]);
-					}
+						break;
+					default:
+						$modx->regClientScript($part[0]);
+						break;
 				}
 			}
 		}
