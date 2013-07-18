@@ -1,7 +1,9 @@
 History
 ================================================================================
 
-- 0.5r
+- 0.6
+    - better external css file detection
+- 0.5
     - first version for MODX Revolution
 - 0.4.2
     - bugfixes
