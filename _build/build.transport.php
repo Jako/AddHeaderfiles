@@ -34,7 +34,7 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME', 'AddHeaderfiles');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
-define('PKG_VERSION', '0.6');
+define('PKG_VERSION', '0.6.1');
 define('PKG_RELEASE', 'pl');
 
 /* define sources */

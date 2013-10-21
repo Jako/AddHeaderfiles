@@ -1,6 +1,8 @@
 History
 ================================================================================
 
+- 0.6.1
+    - bugfix for detecting head area code
 - 0.6
     - better external css file detection
 - 0.5
