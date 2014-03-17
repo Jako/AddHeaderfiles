@@ -34,7 +34,7 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME', 'AddHeaderfiles');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
-define('PKG_VERSION', '0.6.1');
+define('PKG_VERSION', '0.6.2');
 define('PKG_RELEASE', 'pl');
 
 /* define sources */
@@ -71,10 +71,10 @@ echo '<pre>'; /* used for nice formatting of log messages */
 $modx->setLogLevel(modX::LOG_LEVEL_INFO);
 $modx->setLogTarget('ECHO');
 
-$modx->loadClass('transport.modPackageBuilder', '', false, true);
+$modx->loadClass('transport.modPackageBuilder', '', FALSE, TRUE);
 $builder = new modPackageBuilder($modx);
 $builder->createPackage(PKG_NAME_LOWER, PKG_VERSION, PKG_RELEASE);
-$builder->registerNamespace(PKG_NAME_LOWER, false, true, '{core_path}components/' . PKG_NAME_LOWER . '/');
+$builder->registerNamespace(PKG_NAME_LOWER, FALSE, TRUE, '{core_path}components/' . PKG_NAME_LOWER . '/');
 
 /* create category */
 $category = $modx->newObject('modCategory');
@@ -107,24 +107,24 @@ unset($plugins);
 /* create category vehicle */
 $attr = array(
 	xPDOTransport::UNIQUE_KEY => 'category',
-	xPDOTransport::PRESERVE_KEYS => false,
-	xPDOTransport::UPDATE_OBJECT => true,
-	xPDOTransport::RELATED_OBJECTS => true,
+	xPDOTransport::PRESERVE_KEYS => FALSE,
+	xPDOTransport::UPDATE_OBJECT => TRUE,
+	xPDOTransport::RELATED_OBJECTS => TRUE,
 	xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array(
 		'Snippets' => array(
 			xPDOTransport::UNIQUE_KEY => 'name',
-			xPDOTransport::PRESERVE_KEYS => false,
-			xPDOTransport::UPDATE_OBJECT => true,
+			xPDOTransport::PRESERVE_KEYS => FALSE,
+			xPDOTransport::UPDATE_OBJECT => TRUE,
 		),
 		'Plugins' => array(
 			xPDOTransport::UNIQUE_KEY => 'name',
-			xPDOTransport::PRESERVE_KEYS => false,
-			xPDOTransport::UPDATE_OBJECT => true,
-			xPDOTransport::RELATED_OBJECTS => true,
+			xPDOTransport::PRESERVE_KEYS => FALSE,
+			xPDOTransport::UPDATE_OBJECT => TRUE,
+			xPDOTransport::RELATED_OBJECTS => TRUE,
 			xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array(
 				'PluginEvents' => array(
-					xPDOTransport::PRESERVE_KEYS => true,
-					xPDOTransport::UPDATE_OBJECT => false,
+					xPDOTransport::PRESERVE_KEYS => TRUE,
+					xPDOTransport::UPDATE_OBJECT => FALSE,
 					xPDOTransport::UNIQUE_KEY => array('pluginid', 'event'),
 				)
 			)
@@ -149,8 +149,8 @@ if (!is_array($settings)) {
 } else {
 	$attr = array(
 		xPDOTransport::UNIQUE_KEY => 'key',
-		xPDOTransport::PRESERVE_KEYS => true,
-		xPDOTransport::UPDATE_OBJECT => false,
+		xPDOTransport::PRESERVE_KEYS => TRUE,
+		xPDOTransport::UPDATE_OBJECT => FALSE,
 	);
 	foreach ($settings as $setting) {
 		$vehicle = $builder->createVehicle($setting, $attr);

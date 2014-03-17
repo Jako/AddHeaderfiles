@@ -1,6 +1,8 @@
 History
 ================================================================================
 
+- 0.6.2
+    - bugfix for detecting conditionals
 - 0.6.1
     - bugfix for detecting head area code
 - 0.6

@@ -23,7 +23,7 @@
  *
  * @author      Thomas Jakobi (thomas.jakobi@partout.info)
  * @copyright   Copyright 2008-2013, Thomas Jakobi
- * @version     0.6.1
+ * @version     0.6.2
  *
  * @internal    parameter:
  *              addcode - Name(s) of external file(s) or chunkname(s) separated by `sep`. External files can have a position setting or media type separated by `sepmed`
@@ -59,10 +59,14 @@ if (!function_exists('AddHeaderfiles')) {
 				$style = (strpos(strtolower($part[0]), '<style') !== FALSE);
 				$startup = !(isset($part[1]) && $part[1] == 'end');
 				switch (TRUE) {
+					case ($conditional):
+						$modx->regClientStartupHTMLBlock($part[0], TRUE);
+						break;
+					case ($style):
+						$modx->regClientCSS($part[0], TRUE);
+						break;
 					case ($startup):
 						$modx->regClientStartupScript($part[0], FALSE);
-					case (!startup && ($conditional || $style)):
-						$modx->regClientStartupScript($part[0], TRUE);
 						break;
 					default:
 						$modx->regClientScript($part[0], FALSE);
