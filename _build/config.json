@@ -1,0 +1,40 @@
+{
+  "name": "AddHeaderfiles",
+  "lowCaseName": "addheaderfiles",
+  "description": "Wrapper for regClient functions",
+  "author": "Thomas Jakobi",
+  "version": "1.0.0",
+  "package": {
+    "elements": {
+      "snippets": [
+        {
+          "name": "AddHeaderfiles",
+          "file": "addheaderfiles.snippet.php",
+          "properties": [
+            {
+              "name": "addcode",
+              "value": ""
+            },
+            {
+              "name": "sep",
+              "value": ";"
+            },
+            {
+              "name": "sepmed",
+              "value": "|"
+            },
+            {
+              "name": "mediadefault",
+              "value": "screen, tv, projection"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "build": {
+    "readme": "docs/readme.txt",
+    "license": "docs/license.txt",
+    "changelog": "docs/changelog.txt"
+  }
+}
